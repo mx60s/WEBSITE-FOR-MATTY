@@ -123,12 +123,85 @@
     font-weight:500;
   }
   .work-list a.link:hover,.work-list a.link:focus{border-bottom-color:#f5f1e8}
+
+  /* Mobile-only elements — hidden by default, revealed in the media query */
+  .mobile-hero,
+  .panel .contact-line{display:none}
+
+  @media (max-width: 700px){
+    /* Allow vertical scrolling on mobile (desktop locks it) */
+    body{overflow-x:hidden;overflow-y:auto;height:auto;min-height:100vh;min-height:100dvh}
+
+    /* Hide desktop chrome */
+    .bar{display:none}
+    .panel-close{display:none}
+
+    /* Hero: full-viewport spacer above the content, with the scroll hint */
+    .mobile-hero{
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      width:100%;
+      height:100vh;
+      height:100dvh;
+      position:relative;
+      padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 40px);
+    }
+    .scroll-hint{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:42px;height:42px;
+      background:transparent;
+      border:none;
+      color:#f5f1e8;
+      opacity:.55;
+      cursor:pointer;
+      padding:0;
+      animation:scroll-hint-bounce 2.4s ease-in-out infinite;
+    }
+    .scroll-hint:hover,.scroll-hint:focus{opacity:.9;outline:none}
+    @keyframes scroll-hint-bounce{
+      0%,100%{transform:translateY(0)}
+      50%    {transform:translateY(8px)}
+    }
+
+    /* Panel becomes inline content section below the hero */
+    .panel{
+      position:relative;            /* stack above the fixed canvas */
+      top:auto;right:auto;
+      transform:none !important;
+      transition:none;
+      width:100%;
+      height:auto;
+      min-height:100vh;
+      min-height:100dvh;
+      border-left:none;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:clamp(36px,9vw,64px) clamp(22px,6vw,40px) clamp(56px,12vw,96px);
+    }
+    .panel h2{
+      font-size:clamp(2rem,9vw,2.6rem);
+      margin-top:0;
+    }
+    .panel .contact-line{
+      display:block;
+      margin:.35rem 0 0;
+      font-size:.95rem;
+    }
+    .panel .contact-line a{
+      color:#f5f1e8;
+      text-decoration:none;
+      border-bottom:1px solid rgba(245,241,232,.35);
+      padding-bottom:1px;
+    }
+  }
 </style>
 </head>
 <body>
 <canvas id="source"></canvas>
 <canvas id="display"></canvas>
-<video id="reel" src="media/clip_mrbreakfast_3.mp4" muted loop playsinline preload="auto"></video>
+<video id="reel" src="media/reel.mp4" muted loop playsinline preload="auto"></video>
 
 <div class="bar">
   <span class="name">Matt O&rsquo;Donnell</span>
@@ -138,9 +211,18 @@
   </div>
 </div>
 
+<div class="mobile-hero" aria-hidden="true">
+  <button class="scroll-hint" aria-label="Scroll to content">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
 <aside class="panel" id="portfolio-panel" aria-hidden="true">
   <button class="panel-close" id="panel-close" aria-label="Close portfolio">&times;</button>
   <h2>Matt O&rsquo;Donnell</h2>
+  <p class="contact-line"><a href="mailto:odonnell.matt29@gmail.com">odonnell.matt29@gmail.com</a></p>
   <div class="section-label">Selected Work</div>
   <div class="work-list">
     <p>Heavy Doors by Mr. Breakfast (Music Video) &bull;
@@ -367,8 +449,7 @@ function draw(timestamp) {
 
       const lum=src[idx]*.299+src[idx+1]*.587+src[idx+2]*.114;
       const hash=cellHash[(row*cols+col)%MAX_GRID];
-      const noiseFlash = bnAmt>.1 ? (Math.random()-.5)*2*bnAmt : 0;
-      if(lum+hash*C.THRESHOLD_NOISE+noiseFlash<threshold) continue;
+      if(lum+hash*C.THRESHOLD_NOISE<threshold) continue;
 
       let dx=0,dy=0;
       if(gradStr>.5){
@@ -438,6 +519,14 @@ function closePanel(){
 openBtn.addEventListener('click', openPanel);
 closeBtn.addEventListener('click', closePanel);
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+// Mobile scroll hint — smooth-scroll to the content panel when tapped.
+const scrollHint = document.querySelector('.scroll-hint');
+if (scrollHint) {
+  scrollHint.addEventListener('click', () => {
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
 </script>
 </body>
 </html>
