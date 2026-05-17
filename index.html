@@ -17,7 +17,9 @@
   }
   #display{display:block;position:fixed;top:0;left:0;width:100vw;height:100vh}
   #source{display:none}
-  #reel{display:none}
+  /* iOS Safari refuses to decode/play videos that are display:none. Keep the
+     element in the render tree but invisible at 1px in the top-left. */
+  #reel{position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none}
 
   /* Bottom translucent bar */
   .bar{
@@ -201,7 +203,7 @@
 <body>
 <canvas id="source"></canvas>
 <canvas id="display"></canvas>
-<video id="reel" src="media/reel.mp4" muted loop playsinline preload="auto"></video>
+<video id="reel" src="media/reel.mp4" muted loop playsinline autoplay preload="auto"></video>
 
 <div class="bar">
   <span class="name">Matt O&rsquo;Donnell</span>
