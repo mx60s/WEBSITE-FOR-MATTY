@@ -125,6 +125,27 @@
     font-weight:500;
   }
   .work-list a.link:hover,.work-list a.link:focus{border-bottom-color:#f5f1e8}
+  .work-item{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin:0 0 1.4rem 0;
+  }
+  .work-thumb{
+    flex-shrink:0;
+    display:block;
+    width:104px;
+    aspect-ratio:16/9;
+    background:#0a0a0a;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:3px;
+    overflow:hidden;
+    transition:opacity .2s,border-color .2s;
+  }
+  .work-thumb:hover,.work-thumb:focus{opacity:.85;border-color:rgba(255,255,255,.2);outline:none}
+  .work-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .work-meta{flex:1;min-width:0;line-height:1.4;font-size:.95rem}
+  .work-meta i{display:block;margin-top:.2rem}
 
   /* Mobile-only elements — hidden by default, revealed in the media query */
   .mobile-hero,
@@ -141,13 +162,21 @@
     /* Hero: full-viewport spacer above the content, with the scroll hint */
     .mobile-hero{
       display:flex;
-      align-items:flex-end;
-      justify-content:center;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-end;
       width:100%;
       height:100vh;
       height:100dvh;
       position:relative;
-      padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 40px);
+      padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 32px);
+      gap:8px;
+    }
+    .mobile-hero-note{
+      color:#f5f1e8;
+      opacity:.45;
+      font-size:.72rem;
+      letter-spacing:.04em;
     }
     .scroll-hint{
       display:inline-flex;
@@ -219,6 +248,7 @@
       <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+  <span class="mobile-hero-note">looks better on desktop!</span>
 </div>
 
 <aside class="panel" id="portfolio-panel" aria-hidden="true">
@@ -227,23 +257,58 @@
   <p class="contact-line"><a href="mailto:odonnell.matt29@gmail.com">odonnell.matt29@gmail.com</a></p>
   <div class="section-label">Selected Work</div>
   <div class="work-list">
-    <p>Heavy Doors by Mr. Breakfast (Music Video) &bull;
-      <a class="link" href="https://youtu.be/cwjhvEWTi28?si=1rHWhBXN1qDWiNOT" target="_blank" rel="noopener">YouTube</a>
-      <br><i>Produced, Directed, Production Designer, Lighting Designer</i></p>
-    <p>Amber Archives Presents &ldquo;The Vaughans&rdquo; (Documentary Short) &bull;
-      <a class="link" href="https://youtu.be/DeS9AMd5t0g?si=FQaQ2fY3xQrQUS6c" target="_blank" rel="noopener">YouTube</a>
-      <br><i>Creative Director, Co-Producer</i></p>
-    <p>Amber Archives Presents &ldquo;The Roans&rdquo; (Documentary Short) &bull;
-      <a class="link" href="https://youtu.be/mPMxZCgjZVA?si=XmY8XCPozNq67oTo" target="_blank" rel="noopener">YouTube</a>
-      <br><i>Creative Director, Co-Producer</i></p>
-    <p>Mr. Breakfast Live From Martindale School House (Live Performance) &bull;
-      <a class="link" href="https://youtu.be/mAsXeuf_R5k?si=GiRoEIalQ45xI3Ix" target="_blank" rel="noopener">YouTube</a>
-      &nbsp;&bull;
-      <a class="link" href="https://drive.google.com/drive/folders/1mx-HIC_ksfs8dBiLETpATExR5H032XTG" target="_blank" rel="noopener">Drive</a>
-      <br><i>Director, Producer</i></p>
-    <p>CLEAN commercial SPEC &bull;
-      <a class="link" href="https://drive.google.com/drive/folders/1mx-HIC_ksfs8dBiLETpATExR5H032XTG" target="_blank" rel="noopener">Drive</a>
-      <br><i>Writer, Director, Producer</i></p>
+    <div class="work-item">
+      <a class="work-thumb" href="https://youtu.be/cwjhvEWTi28?si=1rHWhBXN1qDWiNOT" target="_blank" rel="noopener" aria-label="Watch Heavy Doors on YouTube">
+        <img src="https://img.youtube.com/vi/cwjhvEWTi28/mqdefault.jpg" alt="" loading="lazy">
+      </a>
+      <div class="work-meta">
+        Heavy Doors by Mr. Breakfast (Music Video) &bull;
+        <a class="link" href="https://youtu.be/cwjhvEWTi28?si=1rHWhBXN1qDWiNOT" target="_blank" rel="noopener">YouTube</a>
+        <i>Produced, Directed, Production Designer, Lighting Designer</i>
+      </div>
+    </div>
+    <div class="work-item">
+      <a class="work-thumb" href="https://youtu.be/DeS9AMd5t0g?si=FQaQ2fY3xQrQUS6c" target="_blank" rel="noopener" aria-label="Watch The Vaughans on YouTube">
+        <img src="https://img.youtube.com/vi/DeS9AMd5t0g/mqdefault.jpg" alt="" loading="lazy">
+      </a>
+      <div class="work-meta">
+        Amber Archives Presents &ldquo;The Vaughans&rdquo; (Documentary Short) &bull;
+        <a class="link" href="https://youtu.be/DeS9AMd5t0g?si=FQaQ2fY3xQrQUS6c" target="_blank" rel="noopener">YouTube</a>
+        <i>Creative Director, Co-Producer</i>
+      </div>
+    </div>
+    <div class="work-item">
+      <a class="work-thumb" href="https://youtu.be/mPMxZCgjZVA?si=XmY8XCPozNq67oTo" target="_blank" rel="noopener" aria-label="Watch The Roans on YouTube">
+        <img src="https://img.youtube.com/vi/mPMxZCgjZVA/mqdefault.jpg" alt="" loading="lazy">
+      </a>
+      <div class="work-meta">
+        Amber Archives Presents &ldquo;The Roans&rdquo; (Documentary Short) &bull;
+        <a class="link" href="https://youtu.be/mPMxZCgjZVA?si=XmY8XCPozNq67oTo" target="_blank" rel="noopener">YouTube</a>
+        <i>Creative Director, Co-Producer</i>
+      </div>
+    </div>
+    <div class="work-item">
+      <a class="work-thumb" href="https://youtu.be/mAsXeuf_R5k?si=GiRoEIalQ45xI3Ix" target="_blank" rel="noopener" aria-label="Watch Mr. Breakfast Live on YouTube">
+        <img src="https://img.youtube.com/vi/mAsXeuf_R5k/mqdefault.jpg" alt="" loading="lazy">
+      </a>
+      <div class="work-meta">
+        Mr. Breakfast Live From Martindale School House (Live Performance) &bull;
+        <a class="link" href="https://youtu.be/mAsXeuf_R5k?si=GiRoEIalQ45xI3Ix" target="_blank" rel="noopener">YouTube</a>
+        &nbsp;&bull;
+        <a class="link" href="https://drive.google.com/drive/folders/1mx-HIC_ksfs8dBiLETpATExR5H032XTG" target="_blank" rel="noopener">Drive</a>
+        <i>Director, Producer</i>
+      </div>
+    </div>
+    <div class="work-item">
+      <a class="work-thumb" href="https://drive.google.com/drive/folders/1mx-HIC_ksfs8dBiLETpATExR5H032XTG" target="_blank" rel="noopener" aria-label="View CLEAN commercial spec on Drive">
+        <img src="media/clean_thumb.jpg" alt="" loading="lazy">
+      </a>
+      <div class="work-meta">
+        CLEAN commercial SPEC &bull;
+        <a class="link" href="https://drive.google.com/drive/folders/1mx-HIC_ksfs8dBiLETpATExR5H032XTG" target="_blank" rel="noopener">Drive</a>
+        <i>Writer, Director, Producer</i>
+      </div>
+    </div>
   </div>
 </aside>
 
